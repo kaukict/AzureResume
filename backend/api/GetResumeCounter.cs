@@ -1,34 +1,63 @@
-using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Extensions.Http;
-using Microsoft.AspNetCore.Http;
+using System.Net;
+using System.Text.Json;
+using Microsoft.Azure.Functions.Worker;
+using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using System.Net.Http;
-using System.Text;
 
-namespace Company.Function
+namespace Api.Function;
+
+public class GetResumeCounter
 {
-    public static class GetResumeCounter
+    private readonly ILogger<GetResumeCounter> _logger;
+    private readonly IVisitorCounterService _visitorCounterService;
+
+    public GetResumeCounter(ILogger<GetResumeCounter> logger, IVisitorCounterService visitorCounterService)
     {
-        [FunctionName("GetResumeCounter")]
-        public static HttpResponseMessage Run(
-            [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
-            [CosmosDB(databaseName:"TokaDB", containerName:"CloudResume", Connection = "AzureResumeConnectionString", Id = "1", PartitionKey = "1")] Counter counter,
-            [CosmosDB(databaseName:"TokaDB", containerName:"CloudResume", Connection = "AzureResumeConnectionString", Id = "1", PartitionKey = "1")] out Counter updatedCounter,
-            
-            ILogger log)
+        _logger = logger;
+        _visitorCounterService = visitorCounterService;
+    }
+
+    [Function("GetResumeCounter")]
+    public async Task<UpdatedCounter> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequestData req,
+    [CosmosDBInput("TokaDB","CloudResume", Connection = "AzureResumeConnectionString", Id = "1", PartitionKey = "1")] Counter counter)
+    {
+        // Start logging function execution
+        _logger.LogInformation("Function 'GetResumeCounter' started.");
+
+        if (counter == null)
         {
-            log.LogInformation("C# HTTP trigger function processed a request.");
-
-            updatedCounter = counter;
-            updatedCounter.Count += 1;
-
-            var jsonToReturn = JsonConvert.SerializeObject(counter);
-
-            return new HttpResponseMessage(System.Net.HttpStatusCode.OK)
+            _logger.LogWarning("Counter data not found for id 'id'. Returning a 404 response.");
+            var notFoundResponse = req.CreateResponse(HttpStatusCode.NotFound);
+            await notFoundResponse.WriteStringAsync("Counter data not found.");
+            return new UpdatedCounter
             {
-                Content = new StringContent(jsonToReturn, Encoding.UTF8, "application/json")
-            }            ;
+                NewCounter = null,
+                HttpResponse = notFoundResponse
+            };
         }
+
+        _logger.LogInformation("Counter data retrieved successfully. Current count: {currentCount}", counter.Count);
+
+        // Increment the counter
+        _logger.LogInformation("Incrementing counter.");
+        counter = _visitorCounterService.IncrementCounter(counter);
+        _logger.LogInformation("Counter incremented. New count: {newCount}", counter.Count);
+
+        // Prepare the response
+        var response = req.CreateResponse(HttpStatusCode.OK);
+        response.Headers.Add("Content-Type", "application/json; charset=utf-8");
+        string jsonString = JsonSerializer.Serialize(counter);
+
+        _logger.LogInformation("Writing response with updated counter value.");
+        await response.WriteStringAsync(jsonString);
+
+        // Log the final step before returning
+        _logger.LogInformation("Response generated and returning the updated counter.");
+
+        return new UpdatedCounter
+        {
+            NewCounter = counter,
+            HttpResponse = response
+        };
     }
 }

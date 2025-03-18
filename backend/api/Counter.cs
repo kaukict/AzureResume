@@ -1,14 +1,13 @@
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
-namespace Company.Function
+namespace Api.Function
 {
     public class Counter
     {
-        [JsonProperty(PropertyName="id")]
+        [JsonPropertyName("id")]
+        public string Id { get; set; } = string.Empty;  // Default to an empty string, or you can leave it uninitialized
 
-        public string id {get; set;}
-        [JsonProperty(PropertyName="count")]
-
-        public int Count {get;set;}
+        [JsonPropertyName("count")]
+        public int Count { get; set; }
     }
 }
