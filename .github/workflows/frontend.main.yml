@@ -23,7 +23,7 @@ jobs:
       uses: azure/CLI@v1
       with:
         inlineScript: |
-            az storage blob sync --account-name staticwebapptoka --auth-mode key -d '$web' -s frontend/
+            az storage blob sync -c '$web' --account-name staticwebapptoka --auth-mode key -s frontend/
     - name: Purge CDN endpoint
       uses: azure/CLI@v1
       with:
