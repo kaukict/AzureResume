@@ -18,7 +18,7 @@ document.getElementById('email-form').addEventListener('submit', async function 
     try {
         // Send the data to the backend using a POST request
         //const response = await fetch('http://192.168.0.132:3000/send', { ---Local container app
-            const response = await fetch('https://dockercontainerapi.calmsmoke-f3f18966.westeurope.azurecontainerapps.io', {
+            const response = await fetch('https://dockercontainerapi.calmsmoke-f3f18966.westeurope.azurecontainerapps.io/send', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
