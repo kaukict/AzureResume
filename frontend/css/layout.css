@@ -1004,3 +1004,95 @@ footer .social-links li:first-child { margin-left: 0; }
 }
 #go-top a:hover { background-color: #0F9095; }
 
+
+/* Welcome Email Section */
+#WelcomeEmail {
+   background: #2B2B2B;
+   padding-top: 96px;
+   padding-bottom: 66px;
+   overflow: hidden;
+}
+
+#WelcomeEmail a, #WelcomeEmail a:visited  { color: #fff; }
+#WelcomeEmail a:hover, #WelcomeEmail a:focus { color: #11ABB0; }
+
+#WelcomeEmail h2 {
+   font: 22px/30px 'opensans-bold', sans-serif;
+   color: #fff;
+   margin-bottom: 12px;
+}
+#WelcomeEmail p {
+   line-height: 30px;
+   color: #7A7A7A;
+}
+#WelcomeEmail .profile-pic {
+   position: relative;
+   width: 120px;
+   height: 120px;
+   border-radius: 100%;
+}
+#WelcomeEmail .contact-details { width: 41.66667%; }
+#WelcomeEmail .download {
+   width: 58.33333%;
+   padding-top: 6px;
+}
+#WelcomeEmail .main-col { padding-right: 5%; }
+#WelcomeEmail .download .button {
+   margin-top: 6px;
+   background: #444;
+}
+#WelcomeEmail .download .button:hover {
+   background: #fff;
+   color: #2B2B2B;
+}
+#WelcomeEmail .download .button i {
+   margin-right: 15px;
+   font-size: 20px;
+}
+/* Form Layout */
+.subscribe-form {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   gap: 10px; /* Space between input and button */
+   max-width: 500px;
+   margin: 0 auto;
+}
+
+.subscribe-form input {
+   flex: 1; /* Allows input to take up available space */
+   padding: 12px;
+   border: 1px solid #ccc;
+   border-radius: 5px;
+   font-size: 16px;
+}
+
+.subscribe-form button {
+   padding: 12px 20px;
+   background-color: #11ABB0;
+   color: white;
+   border: none;
+   cursor: pointer;
+   border-radius: 5px;
+   font-size: 16px;
+   white-space: nowrap; /* Prevents button text from wrapping */
+}
+
+.subscribe-form button:hover {
+   background-color: #313131;
+}
+
+/* Responsive Adjustments */
+@media screen and (max-width: 600px) {
+   .subscribe-form {
+       flex-direction: column;
+       gap: 5px;
+   }
+
+   .subscribe-form input, 
+   .subscribe-form button {
+       width: 100%;
+   }
+}
+
+/* ------------------------------------------------------------------ */

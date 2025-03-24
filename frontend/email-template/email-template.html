@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Template</title>
+    <style>
+        /* Email-specific styles */
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #4CAF50;
+        }
+        p {
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Hey,</h2>
+        <p>Thanks for checking in. This is my first container app that i build as part of my cloud learning path.</p>
+		
+        <h2>Setup Explanation</h2>
+		
+        <h3>1. Static Web Page on Azure</h3>
+        <p>The front-end of this application is a static webpage hosted on <strong>Azure Storage</strong>. 
+		The webpage contains a contact form where users can enter their email. This form sends a POST request to a backend API when submitted.</p>
+       
+	    <h3>2. Backend - Node.js in Docker</h3>
+        <p>The backend API that handles the form submission is built with <strong>Node.js</strong> and runs inside a <strong>Docker container</strong>. 
+		The container is responsible for receiving the POST request from the static webpage and sending an email.</p>
+       
+	    <h3>3. Email Sending with SendGrid</h3>
+        <p>To send the emails, the application integrates with <strong>SendGrid</strong> as the email service provider. 
+		SendGrid provides an API that the application uses to send emails. The API key is securely stored in the environment variable, 
+		which is loaded into the app using a <code>.env</code> file.</p>
+       
+	    <h3>4. Docker Container Setup</h3>
+        <p>The backend API is packaged into a Docker image. The container is exposed on port 3000, which is configured to handle the requests from the static webpage.</p>
+      
+	    <h3>5. CI/CD Pipeline for Deployment</h3>
+        <p>The application is deployed using a Continuous Integration and Continuous Deployment (<strong>CI/CD</strong>) pipeline, 
+		which automatically updates the application whenever changes are pushed to the GitHub repository. </p>
+       
+	    <h3>6. Local Development and Testing</h3>
+        <p>During the development process, the static webpage and backend API are tested locally. The Docker container is run on a virtual machine, 
+		and the static webpage is hosted using Visual Studio Code's Live Server.</p>
+       
+        <footer>
+        <p>Thank you checking in.</p>
+        <p>You can contact me at kaukict@gmail.com </p>
+        </footer>
+    </div>
+</body>
+</html>
