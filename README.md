@@ -21,6 +21,9 @@ The backend is built in Node.js and runs inside a Docker container. It uses Send
 
 The Docker image is stored in GitHub Container Registry(still private as in need to hande some security concern first) and deployed to Azure using Azure Container Apps. It scales automatically and exposes a secure HTTPS endpoint that the static site can call.
 
+Secrets such as the SendGrid API key, sender email address, and subject are stored in Azure Key Vault. Azure container authenticates using a managed identity. During local testing, secrets are loaded through Azure CLI. 
+
 The static website was updated with a new section and a JavaScript script (contact-form.js) to handle form submissions. The script sends the visitor’s email address to the container API, which then sends the welcome email.
 
 To make this secure, I configured CORS in the backend to only accept requests from my static site.
+
