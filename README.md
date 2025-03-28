@@ -19,7 +19,7 @@ To expand the project and learn more about containerization, I added a simple AP
 
 The backend is built in Node.js and runs inside a Docker container. It uses SendGrid to send emails and loads the email content from an external HTML template, this mean that the email can be updated without rebuilding the container.
 
-The Docker image is stored in GitHub Container Registry(still private as in need to hande some security concern first) and deployed to Azure using Azure Container Apps. It scales automatically and exposes a secure HTTPS endpoint that the static site can call.
+The Docker image is stored in GitHub Container Registry and deployed to Azure using Azure Container Apps. It scales automatically and exposes a secure HTTPS endpoint that the static site can call.
 
 Secrets such as the SendGrid API key, sender email address, and subject are stored in Azure Key Vault. Azure container authenticates using a managed identity. During local testing, secrets are loaded through Azure CLI. 
 
